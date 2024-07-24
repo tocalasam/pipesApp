@@ -1,0 +1,52 @@
+<p-menubar [model]="menuItems">
+  <img src="./favicon.ico" alt="Icon">
+  <ng-template pTemplate="item" let-item>
+    <ng-container *ngIf="item.route; else urlRef">
+        <a [routerLink]="item.route" class="p-menuitem-link">
+            <span [class]="item.icon"></span>
+            <span class="ml-2">{{ item.label }}</span>
+        </a>
+    </ng-container>
+    <ng-template #urlRef>
+      <a *ngIf="item.url; else noLink" [href]="item.url" class="p-menuitem-link">
+          <span [class]="item.icon"></span>
+          <span class="ml-2">{{ item.label }}</span>
+      </a>
+    </ng-template>
+    <ng-template #noLink>
+      <div class="p-menuitem-link">
+          <span [class]="item.icon"></span>
+          <span class="ml-2">{{ item.label }}</span>
+          <span class="pi pi-fw pi-angle-down ml-2"></span>
+      </div>
+  </ng-template>
+  </ng-template>
+</p-menubar>
+<!--
+
+  1. (primeNg.module)
+    Exportamos el modulo de primeNg
+
+    2.1 (shared.module)
+      Importamos el modulo de primeNg.
+      Exportamos MenuComponent
+
+      2.1.1 (menu.component)
+        html: pinta para el usuario.
+          <p-menubar [model]="menuItems"></p-menubar>
+        ts: tiene los componentes del menu.
+          public menuItems: MenuItem[]= [];
+
+    2.2 (routing.module)
+      Importa RouterModule.forRoot(routes)
+      Exporta RouterModule
+
+      3. (app.module)
+        Importamos shared. (shared.module)
+        Importamos AppRoutingModule. (routing.module)
+        Importamos BrowserModule. (interfaz Browser)
+
+        4. app.component html
+          usa el componente (shared.module -> que tiene el componente menu.component )
+
+-->
